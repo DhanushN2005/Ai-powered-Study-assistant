@@ -25,10 +25,12 @@ app.use(cors({
     "https://ai-powered-study-assistant.vercel.app",
     "https://ai-powered-study-assistant-fs00x8w6c-dhanushn2005s-projects.vercel.app"
   ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
+app.options("*", cors());
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
