@@ -1,3 +1,4 @@
+import axios from 'axios';
 const API_URL =
   process.env.REACT_APP_API_URL ||
   "https://ai-powered-study-assistant-3wot.onrender.com";
@@ -9,6 +10,7 @@ const api = axios.create({
   },
 });
 
+// Request interceptor - add auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
