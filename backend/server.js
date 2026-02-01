@@ -20,7 +20,12 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5005',
+  origin: [
+    "http://localhost:3000",
+    "https://ai-powered-study-assistant.vercel.app"
+  ],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
