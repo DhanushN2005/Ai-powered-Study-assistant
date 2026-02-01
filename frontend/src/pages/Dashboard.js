@@ -21,7 +21,7 @@ import { analyticsAPI, schedulerAPI, aiAPI, materialsAPI } from '../utils/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5006/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5006/api';
 
 export default function Dashboard() {
   const [greeting, setGreeting] = useState('');
