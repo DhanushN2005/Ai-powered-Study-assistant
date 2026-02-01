@@ -18,7 +18,7 @@ import {
   Activity
 } from 'lucide-react';
 import { analyticsAPI, schedulerAPI, aiAPI, materialsAPI } from '../utils/api';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://ai-powered-study-assistant-3wot.onrender.com/api';
