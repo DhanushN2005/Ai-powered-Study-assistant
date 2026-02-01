@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, Clock, Plus, X, CheckCircle, Loader } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { schedulerAPI } from '../utils/api';
@@ -17,11 +17,7 @@ const Scheduler = () => {
         time: '09:00'
     });
 
-    useEffect(() => {
-        fetchSessions();
-    }, [currentMonth]);
-
-    const fetchSessions = async () => {
+    const fetchSessions = useCallback(async () => {
         try {
             const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
             const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
@@ -36,7 +32,11 @@ const Scheduler = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [currentMonth]);
+
+    useEffect(() => {
+        fetchSessions();
+    }, [fetchSessions]);
 
     const handleAddSession = async (e) => {
         e.preventDefault();

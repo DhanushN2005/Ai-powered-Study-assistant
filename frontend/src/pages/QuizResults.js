@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Award, CheckCircle, XCircle, Loader, Home, Brain } from 'lucide-react';
 import { quizAPI } from '../utils/api';
@@ -9,11 +9,7 @@ const QuizResults = () => {
     const [quiz, setQuiz] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchQuizResults();
-    }, [id]);
-
-    const fetchQuizResults = async () => {
+    const fetchQuizResults = useCallback(async () => {
         try {
             const response = await quizAPI.getOne(id);
             setQuiz(response.data.data);
@@ -22,7 +18,11 @@ const QuizResults = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, navigate]);
+
+    useEffect(() => {
+        fetchQuizResults();
+    }, [fetchQuizResults]);
 
     if (loading) {
         return (

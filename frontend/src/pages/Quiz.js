@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Clock, CheckCircle, XCircle, Loader } from 'lucide-react';
+import { Clock, CheckCircle, Loader } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { quizAPI } from '../utils/api';
 
@@ -14,15 +14,7 @@ const Quiz = () => {
     const [timeSpent, setTimeSpent] = useState(0);
     const [submitting, setSubmitting] = useState(false);
 
-    useEffect(() => {
-        fetchQuiz();
-        const timer = setInterval(() => {
-            setTimeSpent(prev => prev + 1);
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [id]);
-
-    const fetchQuiz = async () => {
+    const fetchQuiz = useCallback(async () => {
         try {
             const response = await quizAPI.getOne(id);
             setQuiz(response.data.data);
@@ -32,7 +24,17 @@ const Quiz = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, navigate]);
+
+    useEffect(() => {
+        fetchQuiz();
+        const timer = setInterval(() => {
+            setTimeSpent(prev => prev + 1);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [fetchQuiz]);
+
+
 
     const handleAnswer = (questionIndex, answer) => {
         setAnswers({ ...answers, [questionIndex]: answer });

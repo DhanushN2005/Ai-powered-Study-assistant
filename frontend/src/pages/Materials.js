@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Upload, FileText, Loader, X, BookOpen, Brain, Calendar, Eye, Trash2, Star } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Upload, FileText, Loader, X, BookOpen, Brain, Calendar, Eye, Star } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { materialsAPI, aiAPI, authAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
@@ -28,21 +28,17 @@ const Materials = () => {
     });
     const [selectedFile, setSelectedFile] = useState(null);
 
-    useEffect(() => {
-        fetchUser();
-        fetchMaterials();
-    }, []);
-
-    const fetchUser = async () => {
+    const fetchUser = useCallback(async () => {
         try {
             const response = await authAPI.getProfile();
             setUser(response.data.data);
         } catch (error) {
             console.error('Error fetching user:', error);
         }
-    };
+    }, []);
 
-    const fetchMaterials = async () => {
+    const fetchMaterials = useCallback(async () => {
+
         try {
             const response = await materialsAPI.getAll();
             setMaterials(response.data.data);
@@ -52,7 +48,12 @@ const Materials = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchUser();
+        fetchMaterials();
+    }, [fetchUser, fetchMaterials]);
 
     // Filter materials for students
     const assignedMaterials = user?.role === 'student'
