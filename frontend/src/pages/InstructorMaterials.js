@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { materialsAPI } from '../utils/api';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5006/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://ai-powered-study-assistant-3wot.onrender.com/api';
 
 const InstructorMaterials = () => {
     const [loading, setLoading] = useState(true);
