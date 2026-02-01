@@ -22,7 +22,8 @@ app.use(helmet());
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://ai-powered-study-assistant.vercel.app"
+    "https://ai-powered-study-assistant.vercel.app",
+    "https://ai-powered-study-assistant-fs00x8w6c-dhanushn2005s-projects.vercel.app"
   ],
   allowedHeaders: ["Content-Type", "Authorization"],
   methods: ["GET", "POST", "PUT", "DELETE"],
