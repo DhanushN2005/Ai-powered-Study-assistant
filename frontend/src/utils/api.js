@@ -4,7 +4,7 @@ const API_URL =
   "https://ai-powered-study-assistant-3wot.onrender.com/api";
 
 const api = axios.create({
-  baseURL: API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`,
+  baseURL: API_URL.endsWith('/api') ? API_URL : `${API_URL.replace(/\/$/, '')}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
