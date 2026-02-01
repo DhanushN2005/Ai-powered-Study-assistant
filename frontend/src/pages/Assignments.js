@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Brain, Calendar, AlertCircle, Loader, Star, BookOpen, FileText } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -13,11 +13,7 @@ const Assignments = () => {
     const [assignedQuizzes, setAssignedQuizzes] = useState([]);
     const [assignedMaterials, setAssignedMaterials] = useState([]);
 
-    useEffect(() => {
-        fetchAssignments();
-    }, []);
-
-    const fetchAssignments = async () => {
+    const fetchAssignments = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             // Fetch user
@@ -65,7 +61,11 @@ const Assignments = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchAssignments();
+    }, [fetchAssignments]);
 
     const handleTakeQuiz = (quizId) => {
         navigate(`/quiz/${quizId}`);
