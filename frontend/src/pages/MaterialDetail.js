@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { materialsAPI } from '../utils/api';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5006/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://ai-powered-study-assistant-3wot.onrender.com/api';
 
 const MaterialDetail = () => {
     const { id } = useParams();
