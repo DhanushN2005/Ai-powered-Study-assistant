@@ -25,7 +25,9 @@ app.use(
       "https://ai-powered-study-assistant-seven.vercel.app",
       "https://ai-powered-study-assistant-git-main-dhanushn2005s-projects.vercel.app",
       "https://ai-powered-study-assistant-six.vercel.app",
-      "https://ai-powered-study-assistant.vercel.app"
+      "https://ai-powered-study-assistant.vercel.app",
+      /^https:\/\/.*\.onrender\.com$/,
+      /^https:\/\/.*\.vercel\.app$/
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
