@@ -1,116 +1,91 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-const connectDB = require('./config/database');
-const { errorHandler } = require('./middleware/error');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const rateLimit = require("express-rate-limit");
+const connectDB = require("./config/database");
+const { errorHandler } = require("./middleware/error");
 
-// Initialize Express app
 const app = express();
 
-// Connect to Database
+/* -------------------- DB -------------------- */
 connectDB();
 
-// Middleware
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+/* -------------------- MIDDLEWARE -------------------- */
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true }));
 
-// Security middleware
 app.use(helmet());
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://ai-powered-study-assistant.vercel.app",
-    "https://ai-powered-study-assistant-fs00x8w6c-dhanushn2005s-projects.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://ai-powered-study-assistant-seven.vercel.app",
+      "https://ai-powered-study-assistant-git-main-dhanushn2005s-projects.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// IMPORTANT: allow preflight
 app.options("*", cors());
 
-// Logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
-// Rate limiting
+/* -------------------- RATE LIMIT -------------------- */
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
-  message: 'Too many requests from this IP, please try again later'
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
-app.use('/api', limiter);
+app.use("/api", limiter);
 
-// Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/materials', require('./routes/materials'));
+/* -------------------- ROUTES (API ONLY) -------------------- */
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/materials", require("./routes/materials"));
+app.use("/api/instructor", require("./routes/instructor"));
 
 const {
   aiRouter,
   quizRouter,
   schedulerRouter,
   analyticsRouter,
-  discussionRouter
-} = require('./routes/index');
+  discussionRouter,
+} = require("./routes");
 
-app.use('/api/ai', aiRouter);
-app.use('/api/quizzes', quizRouter);
-app.use('/api/scheduler', schedulerRouter);
-app.use('/api/analytics', analyticsRouter);
-app.use('/api/discussions', discussionRouter);
-app.use('/api/instructor', require('./routes/instructor'));
+app.use("/api/ai", aiRouter);
+app.use("/api/quizzes", quizRouter);
+app.use("/api/scheduler", schedulerRouter);
+app.use("/api/analytics", analyticsRouter);
+app.use("/api/discussions", discussionRouter);
 
-// Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({
+/* -------------------- HEALTH -------------------- */
+app.get("/health", (req, res) => {
+  res.json({
     success: true,
-    message: 'AI Study Assistant API is running',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV
+    message: "AI Study Assistant API running",
+    environment: process.env.NODE_ENV,
   });
 });
 
-// 404 handler
+/* -------------------- 404 -------------------- */
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: `Route ${req.originalUrl} not found`
+    message: `Route ${req.originalUrl} not found`,
   });
 });
 
-// Error handling middleware (must be last)
+/* -------------------- ERROR HANDLER -------------------- */
 app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5005;
-const server = app.listen(PORT, () => {
-  console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   🎓 AI Study Assistant API Server                        ║
-║                                                           ║
-║   📡 Server running on port ${PORT}                       ║
-║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                              ║
-║   🔗 API Endpoint: http://localhost:${PORT}/api           ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-  `);
-});
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('❌ Unhandled Rejection:', err);
-  server.close(() => process.exit(1));
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('❌ Uncaught Exception:', err);
-  process.exit(1);
-});
-
-module.exports = app;
+/* -------------------- START -------------------- */
+const PORT = process.env.PORT || 5006;
+app.listen(PORT, () =>
+  console.log(`🚀 Backend running on port ${PORT}`)
+);
