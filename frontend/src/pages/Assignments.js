@@ -12,7 +12,6 @@ const Assignments = () => {
     const [loading, setLoading] = useState(true);
     const [assignedQuizzes, setAssignedQuizzes] = useState([]);
     const [assignedMaterials, setAssignedMaterials] = useState([]);
-    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetchAssignments();
@@ -26,7 +25,7 @@ const Assignments = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const currentUser = userResponse.data.data;
-            setUser(currentUser);
+
 
             // Fetch assigned quizzes
             try {

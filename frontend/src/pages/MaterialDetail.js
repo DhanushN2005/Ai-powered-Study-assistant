@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     BookOpen, Brain, Calendar, ChevronLeft,
@@ -21,7 +21,7 @@ const MaterialDetail = () => {
     const [generatingSummary, setGeneratingSummary] = useState(false);
     const [flippedCards, setFlippedCards] = useState({});
 
-    const fetchMaterial = async () => {
+    const fetchMaterial = useCallback(async () => {
         try {
             const response = await materialsAPI.getOne(id);
             setMaterial(response.data.data);
@@ -36,11 +36,11 @@ const MaterialDetail = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, navigate]);
 
     useEffect(() => {
         fetchMaterial();
-    }, [id]);
+    }, [fetchMaterial]);
 
     const handleDelete = async () => {
         if (!window.confirm('Are you sure you want to delete this material?')) return;
