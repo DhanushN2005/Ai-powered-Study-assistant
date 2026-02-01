@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BarChart3, TrendingUp, Clock, Target, Loader } from 'lucide-react';
 import { analyticsAPI, quizAPI } from '../utils/api';
 import toast from 'react-hot-toast';
@@ -8,11 +8,7 @@ const Analytics = () => {
     const [dashboard, setDashboard] = useState(null);
     const [quizStats, setQuizStats] = useState(null);
 
-    useEffect(() => {
-        fetchAnalytics();
-    }, []);
-
-    const fetchAnalytics = async () => {
+    const fetchAnalytics = useCallback(async () => {
         try {
             const [dashboardRes, quizStatsRes] = await Promise.all([
                 analyticsAPI.getDashboard(30),
@@ -27,7 +23,11 @@ const Analytics = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchAnalytics();
+    }, [fetchAnalytics]);
 
     if (loading) {
         return (
@@ -173,10 +173,10 @@ const Analytics = () => {
                                         </div>
                                         <div className="text-right">
                                             <span className={`px-3 py-1 text-sm font-semibold rounded-full ${topic.accuracy >= 70
-                                                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
-                                                    : topic.accuracy >= 50
-                                                        ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
-                                                        : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
+                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                                                : topic.accuracy >= 50
+                                                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
+                                                    : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
                                                 }`}>
                                                 {Math.round(topic.accuracy)}%
                                             </span>
@@ -189,10 +189,10 @@ const Analytics = () => {
                                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                             <div
                                                 className={`h-2 rounded-full transition-all ${topic.accuracy >= 70
-                                                        ? 'bg-green-600 dark:bg-green-500'
-                                                        : topic.accuracy >= 50
-                                                            ? 'bg-yellow-600 dark:bg-yellow-500'
-                                                            : 'bg-red-600 dark:bg-red-500'
+                                                    ? 'bg-green-600 dark:bg-green-500'
+                                                    : topic.accuracy >= 50
+                                                        ? 'bg-yellow-600 dark:bg-yellow-500'
+                                                        : 'bg-red-600 dark:bg-red-500'
                                                     }`}
                                                 style={{ width: `${Math.min(topic.accuracy, 100)}%` }}
                                             />
