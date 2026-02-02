@@ -98,7 +98,7 @@ const Leaderboard = () => {
                     <div className="bg-white dark:bg-gray-800 rounded-t-2xl rounded-b-lg p-8 shadow-2xl border-t-4 border-yellow-400 flex flex-col items-center order-1 md:order-2 z-20 scale-110 md:scale-125 transform hover:-translate-y-2 transition-all duration-300 relative group mb-8 md:mb-0 mt-8 md:mt-0">
                         <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-yellow-50/50 to-transparent dark:from-yellow-900/10 pointer-events-none rounded-t-2xl" />
 
-                        <div className="relative mb-4">
+                        <div className="relative mb-4 mt-8">
                             <Crown className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-12 h-12 text-yellow-500 animate-bounce drop-shadow-md z-30" strokeWidth={2.5} />
                             <div className="w-24 h-24 bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/60 dark:to-yellow-700/60 rounded-full flex items-center justify-center text-4xl font-bold text-yellow-700 dark:text-yellow-400 shadow-inner ring-4 ring-yellow-100 dark:ring-yellow-900/30">
                                 {topThree[0].name.charAt(0)}
