@@ -241,15 +241,15 @@ const Materials = () => {
     }
 
     return (
-        <div className="p-8">
-            <div className="mb-8 flex justify-between items-center">
+        <div className="p-4 sm:p-8">
+            <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Study Materials</h1>
-                    <p className="text-gray-600 dark:text-white mt-2">Upload and manage your study materials</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Study Materials</h1>
+                    <p className="text-gray-600 dark:text-white mt-1 sm:mt-2 text-sm sm:text-base">Upload and manage your study materials</p>
                 </div>
                 <button
                     onClick={() => setShowUploadModal(true)}
-                    className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+                    className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
                 >
                     <Upload className="w-5 h-5" />
                     Upload Material

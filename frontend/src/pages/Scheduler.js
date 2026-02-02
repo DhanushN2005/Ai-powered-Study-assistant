@@ -167,15 +167,15 @@ const Scheduler = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto">
-            <div className="mb-8 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Study Scheduler</h1>
-                    <p className="text-gray-600 dark:text-white mt-2">Plan and track your study sessions</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Study Scheduler</h1>
+                    <p className="text-gray-600 dark:text-white mt-1 sm:mt-2 text-sm sm:text-base">Plan and track your study sessions</p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+                    className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
                 >
                     <Plus className="w-5 h-5" />
                     Schedule Session

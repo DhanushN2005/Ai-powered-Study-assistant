@@ -181,7 +181,7 @@ const Layout = () => {
             {/* Sidebar (Desktop & Mobile Drawer) */}
             <aside
                 className={`
-                    fixed md:static inset-y-0 left-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-2xl md:shadow-none border-r border-gray-200/50 dark:border-gray-700/50 transform transition-all duration-300 ease-in-out flex flex-col relative
+                    fixed md:relative inset-y-0 left-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-2xl md:shadow-none border-r border-gray-200/50 dark:border-gray-700/50 transform transition-all duration-300 ease-in-out flex flex-col
                     ${isMobileMenuOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0'}
                     ${isCollapsed ? 'md:w-20' : 'md:w-64'}
                 `}
