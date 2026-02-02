@@ -1,6 +1,6 @@
 const { Resend } = require('resend');
 
-const apiKey = process.env.RESEND_API_KEY || 're_RBDVghEB_45eij1nSk3qegkbJRviunz86';
+const apiKey = process.env.RESEND_API_KEY;
 if (!apiKey) {
     console.warn('⚠️ RESEND_API_KEY is missing. Email features will not work.');
 }
@@ -16,8 +16,9 @@ const resend = new Resend(apiKey);
 const sendReplyNotification = async (to, discussionTitle, replierName, discussionId) => {
     try {
         const { data, error } = await resend.emails.send({
-            from: 'AI Study Assistant <noreply@dhanu.in>',
+            from: 'AI Study Assistant <onboarding@resend.dev>',
             to: [to],
+            // ...
             subject: `New Reply to: ${discussionTitle}`,
             html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -59,7 +60,7 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
 const sendAssignmentNotification = async (to, type, title, instructorName, link) => {
     try {
         const { data, error } = await resend.emails.send({
-            from: 'AI Study Assistant <noreply@dhanu.in>',
+            from: 'AI Study Assistant <onboarding@resend.dev>',
             to: [to],
             subject: `New ${type} Assigned: ${title}`,
             html: `
