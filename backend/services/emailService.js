@@ -1,15 +1,6 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || 'gmail',
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-        user: process.env.EMAIL_USER || process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send email notification for a new reply
@@ -20,9 +11,9 @@ const transporter = nodemailer.createTransport({
  */
 const sendReplyNotification = async (to, discussionTitle, replierName, discussionId) => {
     try {
-        const mailOptions = {
-            from: process.env.EMAIL_FROM || '"AI Study Assistant" <noreply@studyassistant.com>',
-            to,
+        const { data, error } = await resend.emails.send({
+            from: 'AI Study Assistant <noreply@dhanu.in>',
+            to: [to],
             subject: `New Reply to: ${discussionTitle}`,
             html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -35,18 +26,21 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
             View Discussion
           </a>
           <p style="margin-top: 20px; color: #666; font-size: 12px;">
-            If the button doesn't work, copy loop into your browser: 
+            If the button doesn't work, copy link into your browser: 
             ${process.env.FRONTEND_URL || 'http://localhost:3000'}/discussions/${discussionId}
           </p>
         </div>
       `,
-        };
+        });
 
-        await transporter.sendMail(mailOptions);
-        console.log(`Email sent to ${to}`);
+        if (error) {
+            console.error('Error sending email:', error);
+            return;
+        }
+
+        console.log(`Email sent to ${to}, ID: ${data.id}`);
     } catch (error) {
         console.error('Error sending email:', error);
-        // Don't throw error to prevent blocking the request flow
     }
 };
 
@@ -60,9 +54,9 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
  */
 const sendAssignmentNotification = async (to, type, title, instructorName, link) => {
     try {
-        const mailOptions = {
-            from: process.env.EMAIL_FROM || '"AI Study Assistant" <noreply@studyassistant.com>',
-            to,
+        const { data, error } = await resend.emails.send({
+            from: 'AI Study Assistant <noreply@dhanu.in>',
+            to: [to],
             subject: `New ${type} Assigned: ${title}`,
             html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -76,15 +70,19 @@ const sendAssignmentNotification = async (to, type, title, instructorName, link)
             View Assignment
           </a>
           <p style="margin-top: 20px; color: #666; font-size: 12px;">
-            If the button doesn't work, copy loop into your browser: 
+            If the button doesn't work, copy link into your browser: 
             ${link}
           </p>
         </div>
       `,
-        };
+        });
 
-        await transporter.sendMail(mailOptions);
-        console.log(`Assignment email sent to ${to}`);
+        if (error) {
+            console.error('Error sending assignment email:', error);
+            return;
+        }
+
+        console.log(`Assignment email sent to ${to}, ID: ${data.id}`);
     } catch (error) {
         console.error('Error sending assignment email:', error);
     }
