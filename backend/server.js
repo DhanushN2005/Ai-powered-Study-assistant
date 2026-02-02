@@ -11,6 +11,10 @@ const http = require('http');
 const { Server } = require("socket.io");
 
 const app = express();
+
+// Trust proxy is required for rate limiting behind a reverse proxy (Render, Vercel, Heroku)
+app.set('trust proxy', 1);
+
 const server = http.createServer(app);
 
 // Socket.io setup
