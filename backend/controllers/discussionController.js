@@ -168,6 +168,14 @@ exports.deleteDiscussion = asyncHandler(async (req, res) => {
  * @route   POST /api/discussions/:id/replies
  * @access  Private
  */
+const { sendReplyNotification } = require('../services/emailService');
+const User = require('../models/User');
+
+/**
+ * @desc    Add reply to discussion
+ * @route   POST /api/discussions/:id/replies
+ * @access  Private
+ */
 exports.addReply = asyncHandler(async (req, res) => {
     const { content } = req.body;
 
@@ -192,6 +200,40 @@ exports.addReply = asyncHandler(async (req, res) => {
     const updatedDiscussion = await Discussion.findById(req.params.id)
         .populate('user', 'name email')
         .populate('replies.user', 'name email role');
+
+    // NOTIFICATION LOGIC
+    try {
+        // Don't notify if user is replying to their own discussion
+        if (discussion.user.toString() !== req.user.id) {
+            const discussionOwner = await User.findById(discussion.user);
+
+            if (discussionOwner) {
+                // 1. Send Real-time Notification via Socket.io
+                if (req.io) {
+                    req.io.to(discussion.user.toString()).emit('notification', {
+                        type: 'new_reply',
+                        message: `${req.user.name} replied to: ${discussion.title}`,
+                        discussionId: discussion._id,
+                        replierName: req.user.name,
+                        createdAt: new Date()
+                    });
+                }
+
+                // 2. Send Email Notification
+                if (discussionOwner.email) {
+                    // Run distinct from main thread to not block response
+                    sendReplyNotification(
+                        discussionOwner.email,
+                        discussion.title,
+                        req.user.name,
+                        discussion._id
+                    ).catch(err => console.error('Email sending failed in controller:', err));
+                }
+            }
+        }
+    } catch (notificationError) {
+        console.error('Notification Error:', notificationError);
+    }
 
     res.status(200).json({
         success: true,

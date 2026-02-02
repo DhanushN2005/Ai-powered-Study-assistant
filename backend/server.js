@@ -7,7 +7,44 @@ const rateLimit = require("express-rate-limit");
 const connectDB = require("./config/database");
 const { errorHandler } = require("./middleware/error");
 
+const http = require('http');
+const { Server } = require("socket.io");
+
 const app = express();
+const server = http.createServer(app);
+
+// Socket.io setup
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://ai-powered-study-assistant-seven.vercel.app",
+      "https://ai-powered-study-assistant-git-main-dhanushn2005s-projects.vercel.app",
+      "https://ai-powered-study-assistant-six.vercel.app",
+      "https://ai-powered-study-assistant.vercel.app",
+      /^https:\/\/.*\.onrender\.com$/,
+      /^https:\/\/.*\.vercel\.app$/
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  // console.log("User connected:", socket.id);
+
+  // Join a room based on user ID for private notifications
+  socket.on("join_user_room", (userId) => {
+    if (userId) {
+      socket.join(userId);
+      // console.log(`User ${userId} joined their notification room`);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    // console.log("User disconnected", socket.id);
+  });
+});
 
 /* -------------------- DB -------------------- */
 connectDB();
@@ -15,6 +52,12 @@ connectDB();
 /* -------------------- MIDDLEWARE -------------------- */
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
+
+// Attach io to req to be used in controllers
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 app.use(helmet());
 
@@ -90,6 +133,6 @@ app.use(errorHandler);
 
 /* -------------------- START -------------------- */
 const PORT = process.env.PORT || 5006;
-app.listen(PORT, () =>
+server.listen(PORT, () =>
   console.log(`🚀 Backend running on port ${PORT}`)
 );
