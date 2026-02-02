@@ -216,7 +216,7 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 
   // Create reset url
   const resetUrl = `${req.protocol}://${req.get('host')}/resetpassword/${resetToken}`;
-  const frontendResetUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/reset-password/${resetToken}`;
+  const frontendResetUrl = `${process.env.CLIENT_URL || 'https://ai-powered-study-assistant-seven.vercel.app'}/reset-password/${resetToken}`;
 
   const message = `
     <h1>You have requested a password reset</h1>

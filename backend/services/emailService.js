@@ -26,13 +26,13 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
           <p>Hello,</p>
           <p><strong>${replierName}</strong> has just replied to your discussion thread: <strong>"${discussionTitle}"</strong>.</p>
           <p>Click the button below to view the discussion:</p>
-          <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/discussions/${discussionId}" 
+          <a href="${process.env.FRONTEND_URL || 'https://ai-powered-study-assistant-seven.vercel.app'}/discussions/${discussionId}" 
              style="display: inline-block; padding: 10px 20px; background-color: #4F46E5; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">
             View Discussion
           </a>
           <p style="margin-top: 20px; color: #666; font-size: 12px;">
             If the button doesn't work, copy link into your browser: 
-            ${process.env.FRONTEND_URL || 'http://localhost:3000'}/discussions/${discussionId}
+            ${process.env.FRONTEND_URL || 'https://ai-powered-study-assistant-seven.vercel.app'}/discussions/${discussionId}
           </p>
         </div>
       `,
