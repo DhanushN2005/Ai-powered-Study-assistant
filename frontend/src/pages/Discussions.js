@@ -121,7 +121,7 @@ const Discussions = () => {
     return (
         <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="mb-8 px-4 sm:px-0">
+            <div className="mb-8 px-4 sm:px-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Discussions</h1>
@@ -252,24 +252,27 @@ const Discussions = () => {
                                     )}
 
                                     {/* Meta Info */}
-                                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                                        <span className="flex items-center gap-1">
-                                            <MessageCircle className="w-4 h-4" />
-                                            {discussion.replyCount || 0} replies
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <Eye className="w-4 h-4" />
-                                            {discussion.views || 0} views
-                                        </span>
-                                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(discussion.status)}`}>
-                                            {discussion.status === 'answered' && <CheckCircle className="w-3 h-3 inline mr-1" />}
-                                            {discussion.status}
-                                        </span>
-                                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(discussion.difficulty)}`}>
-                                            {discussion.difficulty}
-                                        </span>
-                                        <span className="ml-auto">
-                                            by {discussion.user?.name || 'Unknown'} • {new Date(discussion.createdAt).toLocaleDateString()}
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mt-auto">
+                                        <div className="flex flex-wrap items-center gap-3">
+                                            <span className="flex items-center gap-1">
+                                                <MessageCircle className="w-4 h-4" />
+                                                {discussion.replyCount || 0} replies
+                                            </span>
+                                            <span className="flex items-center gap-1">
+                                                <Eye className="w-4 h-4" />
+                                                {discussion.views || 0} views
+                                            </span>
+                                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(discussion.status)}`}>
+                                                {discussion.status === 'answered' && <CheckCircle className="w-3 h-3 inline mr-1" />}
+                                                {discussion.status}
+                                            </span>
+                                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getDifficultyColor(discussion.difficulty)}`}>
+                                                {discussion.difficulty}
+                                            </span>
+                                        </div>
+
+                                        <span className="text-xs sm:ml-auto pt-2 sm:pt-0 border-t sm:border-0 border-gray-100 dark:border-gray-700">
+                                            by <span className="font-semibold text-gray-700 dark:text-gray-300">{discussion.user?.name || 'Unknown'}</span> • {new Date(discussion.createdAt).toLocaleDateString()}
                                         </span>
                                     </div>
                                 </div>
