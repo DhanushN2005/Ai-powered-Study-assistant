@@ -12,20 +12,20 @@ const Landing = () => {
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
             </div>
 
-            <nav className="relative z-10 p-6 flex justify-between items-center max-w-7xl mx-auto backdrop-blur-sm bg-slate-950/50 sticky top-0 border-b border-white/5">
-                <div className="flex items-center gap-2 font-bold text-2xl">
-                    <div className="p-2 bg-blue-600 rounded-lg">
-                        <BookOpen className="w-6 h-6 text-white" />
+            <nav className="relative z-10 px-4 py-4 md:p-6 flex justify-between items-center max-w-7xl mx-auto backdrop-blur-sm bg-slate-950/50 sticky top-0 border-b border-white/5">
+                <div className="flex items-center gap-2 font-bold text-lg md:text-2xl">
+                    <div className="p-1.5 md:p-2 bg-blue-600 rounded-lg">
+                        <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
                         AI Study Assistant
                     </span>
                 </div>
-                <div className="flex items-center gap-6">
-                    <Link to="/login" className="text-slate-300 hover:text-white transition-colors font-medium">Sign In</Link>
-                    <Link to="/register" className="bg-white text-slate-950 px-6 py-2.5 rounded-full font-bold hover:bg-blue-50 transition-all shadow-lg hover:shadow-blue-500/20 flex items-center gap-2 group">
+                <div className="flex items-center gap-3 md:gap-6">
+                    <Link to="/login" className="text-slate-300 hover:text-white transition-colors font-medium text-sm md:text-base whitespace-nowrap">Sign In</Link>
+                    <Link to="/register" className="bg-white text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:bg-blue-50 transition-all shadow-lg hover:shadow-blue-500/20 flex items-center gap-2 group text-sm md:text-base whitespace-nowrap">
                         Get Started
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
             </nav>
