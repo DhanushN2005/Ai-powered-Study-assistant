@@ -2,7 +2,7 @@ const { Resend } = require('resend');
 
 const apiKey = process.env.RESEND_API_KEY;
 if (!apiKey) {
-    console.warn('⚠️ RESEND_API_KEY is missing. Email features will not work.');
+  console.warn('⚠️ RESEND_API_KEY is missing. Email features will not work.');
 }
 const resend = new Resend(apiKey);
 
@@ -14,13 +14,13 @@ const resend = new Resend(apiKey);
  * @param {string} discussionId - ID of the discussion for linking
  */
 const sendReplyNotification = async (to, discussionTitle, replierName, discussionId) => {
-    try {
-        const { data, error } = await resend.emails.send({
-            from: 'AI Study Assistant <onboarding@resend.dev>',
-            to: [to],
-            // ...
-            subject: `New Reply to: ${discussionTitle}`,
-            html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'AI Study Assistant <onboarding@resend.dev>',
+      to: [to],
+      // ...
+      subject: `New Reply to: ${discussionTitle}`,
+      html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>New Reply Received!</h2>
           <p>Hello,</p>
@@ -36,17 +36,17 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
           </p>
         </div>
       `,
-        });
+    });
 
-        if (error) {
-            console.error('Error sending email:', error);
-            return;
-        }
-
-        console.log(`Email sent to ${to}, ID: ${data.id}`);
-    } catch (error) {
-        console.error('Error sending email:', error);
+    if (error) {
+      console.error('Error sending email:', error);
+      return;
     }
+
+    console.log(`Email sent to ${to}, ID: ${data.id}`);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
 };
 
 /**
@@ -58,12 +58,12 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
  * @param {string} link - Link to the assignment
  */
 const sendAssignmentNotification = async (to, type, title, instructorName, link) => {
-    try {
-        const { data, error } = await resend.emails.send({
-            from: 'AI Study Assistant <onboarding@resend.dev>',
-            to: [to],
-            subject: `New ${type} Assigned: ${title}`,
-            html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'AI Study Assistant <onboarding@resend.dev>',
+      to: [to],
+      subject: `New ${type} Assigned: ${title}`,
+      html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>New Assignment Received!</h2>
           <p>Hello,</p>
@@ -80,20 +80,20 @@ const sendAssignmentNotification = async (to, type, title, instructorName, link)
           </p>
         </div>
       `,
-        });
+    });
 
-        if (error) {
-            console.error('Error sending assignment email:', error);
-            return;
-        }
-
-        console.log(`Assignment email sent to ${to}, ID: ${data.id}`);
-    } catch (error) {
-        console.error('Error sending assignment email:', error);
+    if (error) {
+      console.error('Error sending assignment email:', error);
+      return;
     }
+
+    console.log(`Assignment email sent to ${to}, ID: ${data.id}`);
+  } catch (error) {
+    console.error('Error sending assignment email:', error);
+  }
 };
 
 module.exports = {
-    sendReplyNotification,
-    sendAssignmentNotification
+  sendReplyNotification,
+  sendAssignmentNotification
 };
