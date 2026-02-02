@@ -32,119 +32,141 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4 transition-colors">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md transition-colors">
-                <div className="text-center mb-8">
-                    <div className="flex items-center justify-center gap-2 text-3xl font-bold text-indigo-600 mb-2">
-                        <BookOpen className="w-10 h-10" />
-                        <span>AI Study Assistant</span>
-                    </div>
-                    <p className="text-gray-600 dark:text-white">Create your account</p>
-                </div>
+        <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+            {/* Background Decoration */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+            </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
-                            Full Name
-                        </label>
-                        <input
-                            type="text"
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            placeholder="John Doe"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            placeholder="your@email.com"
-                        />
+            <div className="relative z-10 w-full max-w-md">
+                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-2xl shadow-2xl p-8 transform transition-all hover:scale-[1.01] duration-300">
+                    <div className="text-center mb-8">
+                        <Link to="/" className="inline-flex items-center justify-center gap-2 mb-6 group">
+                            <div className="p-3 bg-blue-600 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-blue-600/30">
+                                <BookOpen className="w-8 h-8 text-white" />
+                            </div>
+                        </Link>
+                        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+                            Create Account
+                        </h1>
+                        <p className="mt-2 text-slate-600 dark:text-slate-400">
+                            Start your learning journey today
+                        </p>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            required
-                            minLength={6}
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            placeholder="••••••••"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
-                            I am a
-                        </label>
-                        <div className="flex gap-4">
-                            <label className="flex-1 cursor-pointer">
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="student"
-                                    checked={formData.role === 'student' || !formData.role}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                    className="sr-only"
-                                />
-                                <div className={`border-2 rounded-lg p-4 text-center transition-all ${formData.role === 'student' || !formData.role
-                                    ? 'border-indigo-600 bg-indigo-50'
-                                    : 'border-gray-300 hover:border-indigo-300'
-                                    }`}>
-                                    <div className="text-2xl mb-2">🎓</div>
-                                    <div className="font-semibold text-gray-900">Student</div>
-                                    <div className="text-xs text-gray-600 mt-1">Learn and practice</div>
-                                </div>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-900 dark:text-slate-200 ml-1">
+                                Full Name
                             </label>
-                            <label className="flex-1 cursor-pointer">
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="instructor"
-                                    checked={formData.role === 'instructor'}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                    className="sr-only"
-                                />
-                                <div className={`border-2 rounded-lg p-4 text-center transition-all ${formData.role === 'instructor'
-                                    ? 'border-indigo-600 bg-indigo-50'
-                                    : 'border-gray-300 hover:border-indigo-300'
-                                    }`}>
-                                    <div className="text-2xl mb-2">👨‍🏫</div>
-                                    <div className="font-semibold text-gray-900">Instructor</div>
-                                    <div className="text-xs text-gray-600 mt-1">Teach and manage</div>
-                                </div>
-                            </label>
+                            <input
+                                type="text"
+                                required
+                                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 dark:text-white placeholder-slate-400"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                placeholder="John Doe"
+                            />
                         </div>
-                    </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
-                    >
-                        {loading ? 'Creating account...' : 'Sign Up'}
-                    </button>
-                </form>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-900 dark:text-slate-200 ml-1">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                required
+                                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 dark:text-white placeholder-slate-400"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                placeholder="name@example.com"
+                            />
+                        </div>
 
-                <p className="text-center mt-6 text-gray-600 dark:text-white">
-                    Already have an account?{' '}
-                    <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
-                        Sign in
-                    </Link>
-                </p>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-900 dark:text-slate-200 ml-1">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                required
+                                minLength={6}
+                                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 dark:text-white placeholder-slate-400"
+                                value={formData.password}
+                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                placeholder="Create a strong password"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-900 dark:text-slate-200 ml-1">
+                                I am a
+                            </label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <label className={`relative cursor-pointer rounded-xl p-4 border-2 transition-all duration-200 flex flex-col items-center gap-2 group ${formData.role === 'student' || !formData.role
+                                        ? 'border-blue-600 bg-blue-50/50 dark:bg-blue-900/20'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-700'
+                                    }`}>
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="student"
+                                        checked={formData.role === 'student' || !formData.role}
+                                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                        className="sr-only"
+                                    />
+                                    <div className="text-3xl filter drop-shadow-md group-hover:scale-110 transition-transform">🎓</div>
+                                    <span className={`font-semibold ${formData.role === 'student' ? 'text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'
+                                        }`}>Student</span>
+                                </label>
+
+                                <label className={`relative cursor-pointer rounded-xl p-4 border-2 transition-all duration-200 flex flex-col items-center gap-2 group ${formData.role === 'instructor'
+                                        ? 'border-blue-600 bg-blue-50/50 dark:bg-blue-900/20'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-700'
+                                    }`}>
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="instructor"
+                                        checked={formData.role === 'instructor'}
+                                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                        className="sr-only"
+                                    />
+                                    <div className="text-3xl filter drop-shadow-md group-hover:scale-110 transition-transform">👨‍🏫</div>
+                                    <span className={`font-semibold ${formData.role === 'instructor' ? 'text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'
+                                        }`}>Instructor</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 transform transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
+                        >
+                            {loading ? (
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    <span>Creating Account...</span>
+                                </>
+                            ) : (
+                                'Create Account'
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="mt-8 text-center text-sm text-slate-600 dark:text-slate-400">
+                        Already have an account?{' '}
+                        <Link
+                            to="/login"
+                            className="font-bold text-blue-600 hover:text-blue-500 transition-colors"
+                        >
+                            Sign in
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );
