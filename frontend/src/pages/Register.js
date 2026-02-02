@@ -139,7 +139,7 @@ const Register = () => {
                     </button>
                 </form>
 
-                <p className="text-center mt-6 text-gray-600">
+                <p className="text-center mt-6 text-gray-600 dark:text-white">
                     Already have an account?{' '}
                     <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
                         Sign in

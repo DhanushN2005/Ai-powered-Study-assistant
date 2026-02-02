@@ -4,8 +4,12 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 
 // Pages
+// Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Landing from './pages/Landing';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import Materials from './pages/Materials';
 import MaterialDetail from './pages/MaterialDetail';
@@ -74,41 +78,43 @@ function App() {
 
               <Routes>
                 {/* Public routes */}
+                <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
 
                 {/* Protected routes */}
                 <Route
-                  path="/"
                   element={
                     <PrivateRoute>
                       <Layout />
                     </PrivateRoute>
                   }
                 >
-                  <Route index element={<RoleRedirect />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="materials" element={<Materials />} />
-                  <Route path="materials/:id" element={<MaterialDetail />} />
-                  <Route path="quiz/:id" element={<Quiz />} />
-                  <Route path="quiz/:id/results" element={<QuizResults />} />
-                  <Route path="assigned-quizzes" element={<Assignments />} />
-                  <Route path="assignments" element={<Assignments />} />
-                  <Route path="scheduler" element={<Scheduler />} />
-                  <Route path="analytics" element={<Analytics />} />
-                  <Route path="leaderboard" element={<Leaderboard />} />
-                  <Route path="discussions" element={<Discussions />} />
-                  <Route path="discussions/:id" element={<DiscussionDetail />} />
-                  <Route path="profile" element={<Profile />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/redirect" element={<RoleRedirect />} />
+                  <Route path="/materials" element={<Materials />} />
+                  <Route path="/materials/:id" element={<MaterialDetail />} />
+                  <Route path="/quiz/:id" element={<Quiz />} />
+                  <Route path="/quiz/:id/results" element={<QuizResults />} />
+                  <Route path="/assigned-quizzes" element={<Assignments />} />
+                  <Route path="/assignments" element={<Assignments />} />
+                  <Route path="/scheduler" element={<Scheduler />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/leaderboard" element={<Leaderboard />} />
+                  <Route path="/discussions" element={<Discussions />} />
+                  <Route path="/discussions/:id" element={<DiscussionDetail />} />
+                  <Route path="/profile" element={<Profile />} />
 
                   {/* Instructor routes */}
-                  <Route path="instructor" element={<InstructorDashboard />} />
-                  <Route path="instructor/materials" element={<InstructorMaterials />} />
-                  <Route path="instructor/analytics" element={<InstructorAnalytics />} />
+                  <Route path="/instructor" element={<InstructorDashboard />} />
+                  <Route path="/instructor/materials" element={<InstructorMaterials />} />
+                  <Route path="/instructor/analytics" element={<InstructorAnalytics />} />
                 </Route>
 
                 {/* 404 */}
-                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </div>
           </Router>

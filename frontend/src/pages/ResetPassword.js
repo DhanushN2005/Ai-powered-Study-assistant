@@ -1,42 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 
-const Login = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+const ResetPassword = () => {
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const { resetToken } = useParams();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match');
+            return;
+        }
+
         setLoading(true);
 
         try {
-            const response = await api.post('/auth/login', formData);
-            localStorage.setItem('token', response.data.token);
-
-            // Get user data to check role
-            const userResponse = await api.get('/auth/me', {
-                headers: { Authorization: `Bearer ${response.data.token}` }
-            });
-
-            const userRole = userResponse.data.data.role;
-
-            toast.success('Login successful!');
-
-            // Redirect based on role
-            if (userRole === 'instructor') {
-                navigate('/instructor');
-            } else {
-                navigate('/dashboard');
-            }
+            await api.put(`/auth/resetpassword/${resetToken}`, { password });
+            toast.success('Password updated successfully!');
+            navigate('/login');
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Login failed');
+            toast.error(error.response?.data?.message || 'Failed to reset password');
         } finally {
             setLoading(false);
         }
@@ -50,40 +40,37 @@ const Login = () => {
                         <BookOpen className="w-10 h-10" />
                         <span>AI Study Assistant</span>
                     </div>
-                    <p className="text-gray-600 dark:text-white">Sign in to continue learning</p>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mt-4">Set New Password</h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
-                            Email
+                            New Password
                         </label>
-                        <input
-                            type="email"
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            placeholder="your@email.com"
-                        />
-                    </div>
-
-                    <div>
-                        <div className="flex justify-between mb-2">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-white">
-                                Password
-                            </label>
-                            <Link to="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500">
-                                Forgot password?
-                            </Link>
-                        </div>
                         <input
                             type="password"
                             required
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
+                            minLength={6}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
+                            Confirm New Password
+                        </label>
+                        <input
+                            type="password"
+                            required
+                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="••••••••"
+                            minLength={6}
                         />
                     </div>
 
@@ -92,19 +79,12 @@ const Login = () => {
                         disabled={loading}
                         className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
                     >
-                        {loading ? 'Signing in...' : 'Sign In'}
+                        {loading ? 'Resetting...' : 'Reset Password'}
                     </button>
                 </form>
-
-                <p className="text-center mt-6 text-gray-600 dark:text-white">
-                    Don't have an account?{' '}
-                    <Link to="/register" className="text-indigo-600 font-semibold hover:underline">
-                        Sign up
-                    </Link>
-                </p>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default ResetPassword;
