@@ -11,7 +11,7 @@ import {
   Target,
   ChevronRight,
   Bell,
-  Star,
+
   AlertCircle,
   Zap,
   TrendingUp,
@@ -380,12 +380,7 @@ export default function Dashboard() {
 
 // Styled Components
 function StatCard({ icon: Icon, title, value, subtitle, color, delay, trend, isFire }) {
-  const colors = {
-    blue: 'from-blue-500 to-blue-600 shadow-blue-200',
-    green: 'from-emerald-500 to-emerald-600 shadow-emerald-200',
-    purple: 'from-violet-500 to-violet-600 shadow-violet-200',
-    orange: 'from-orange-500 to-orange-600 shadow-orange-200',
-  };
+
 
   const bgColors = {
     blue: 'bg-blue-50 text-blue-600',

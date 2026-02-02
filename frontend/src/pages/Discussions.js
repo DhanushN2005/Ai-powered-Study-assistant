@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageSquare, Plus, ThumbsUp, MessageCircle, Eye, CheckCircle, Filter, Search, TrendingUp, Clock } from 'lucide-react';
+import { MessageSquare, Plus, ThumbsUp, MessageCircle, Eye, CheckCircle, Search } from 'lucide-react';
 import { discussionAPI } from '../utils/api';
 import toast from 'react-hot-toast';
 
@@ -27,9 +27,9 @@ const Discussions = () => {
 
     useEffect(() => {
         fetchDiscussions();
-    }, [filters]);
+    }, [fetchDiscussions]);
 
-    const fetchDiscussions = async () => {
+    const fetchDiscussions = useCallback(async () => {
         try {
             setLoading(true);
             const response = await discussionAPI.getAll(filters);
@@ -40,7 +40,7 @@ const Discussions = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [filters]);
 
     const handleCreateDiscussion = async (e) => {
         e.preventDefault();

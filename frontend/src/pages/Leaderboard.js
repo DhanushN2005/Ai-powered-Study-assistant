@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { analyticsAPI } from '../utils/api';
-import { Trophy, Medal, Crown, Star, TrendingUp, Shield } from 'lucide-react';
+import { Trophy, Crown, Star, TrendingUp } from 'lucide-react';
 
 const Leaderboard = () => {
     const [leaderboard, setLeaderboard] = useState([]);

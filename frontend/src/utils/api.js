@@ -4,7 +4,11 @@ const API_URL =
   "https://ai-powered-study-assistant-3wot.onrender.com/api";
 
 const api = axios.create({
-  baseURL: API_URL.endsWith('/api') ? API_URL : `${API_URL.replace(/\/$/, '')}/api`,
+  baseURL: (() => {
+    const url = API_URL.replace(/\/+$/, ''); // Remove trailing slashes
+    if (url.endsWith('/api')) return url;
+    return `${url}/api`;
+  })(),
   headers: {
     'Content-Type': 'application/json',
   },
