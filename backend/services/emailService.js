@@ -47,6 +47,47 @@ const sendReplyNotification = async (to, discussionTitle, replierName, discussio
     }
 };
 
+/**
+ * Send email notification for a new assignment (Material or Quiz)
+ * @param {string} to - Recipient email
+ * @param {string} type - 'Material' or 'Quiz'
+ * @param {string} title - Title of the assignment
+ * @param {string} instructorName - Name of the instructor
+ * @param {string} link - Link to the assignment
+ */
+const sendAssignmentNotification = async (to, type, title, instructorName, link) => {
+    try {
+        const mailOptions = {
+            from: process.env.EMAIL_FROM || '"AI Study Assistant" <noreply@studyassistant.com>',
+            to,
+            subject: `New ${type} Assigned: ${title}`,
+            html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>New Assignment Received!</h2>
+          <p>Hello,</p>
+          <p>Instructor <strong>${instructorName}</strong> has assigned a new ${type.toLowerCase()} to you:</p>
+          <p style="font-size: 18px; font-weight: bold; margin: 20px 0;">${title}</p>
+          
+          <a href="${link}" 
+             style="display: inline-block; padding: 10px 20px; background-color: #4F46E5; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">
+            View Assignment
+          </a>
+          <p style="margin-top: 20px; color: #666; font-size: 12px;">
+            If the button doesn't work, copy loop into your browser: 
+            ${link}
+          </p>
+        </div>
+      `,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`Assignment email sent to ${to}`);
+    } catch (error) {
+        console.error('Error sending assignment email:', error);
+    }
+};
+
 module.exports = {
     sendReplyNotification,
+    sendAssignmentNotification
 };

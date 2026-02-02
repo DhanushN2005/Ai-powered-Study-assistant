@@ -69,6 +69,11 @@ exports.getStudentDetails = asyncHandler(async (req, res) => {
     });
 });
 
+// ... imports
+const { sendAssignmentNotification } = require('../services/emailService');
+
+// ...
+
 /**
  * @desc    Assign material to students
  * @route   POST /api/instructor/assign-material
@@ -95,13 +100,40 @@ exports.assignMaterial = asyncHandler(async (req, res) => {
 
     // Add assigned students to material
     material.assignedTo = material.assignedTo || [];
+    const newAssignedStudentIds = []; // Track newly assigned students to notify them
+
     studentIds.forEach(studentId => {
         if (!material.assignedTo.includes(studentId)) {
             material.assignedTo.push(studentId);
+            newAssignedStudentIds.push(studentId);
         }
     });
 
     await material.save();
+
+    // Send email notifications to newly assigned students
+    if (newAssignedStudentIds.length > 0) {
+        try {
+            const students = await User.find({ _id: { $in: newAssignedStudentIds } });
+
+            // Send emails in parallel
+            await Promise.all(students.map(student => {
+                if (student.email) {
+                    return sendAssignmentNotification(
+                        student.email,
+                        'Material',
+                        material.title,
+                        req.user.name,
+                        `${process.env.FRONTEND_URL || 'http://localhost:3000'}/materials`
+                    );
+                }
+            }));
+            console.log(`Sent notifications to ${students.length} students for material assignment.`);
+        } catch (error) {
+            console.error('Error sending assignment emails:', error);
+            // Don't fail the request if emails fail
+        }
+    }
 
     res.status(200).json({
         success: true,
@@ -138,13 +170,39 @@ exports.assignQuiz = asyncHandler(async (req, res) => {
     quiz.assignedTo = quiz.assignedTo || [];
     quiz.dueDate = dueDate || null;
 
+    const newAssignedStudentIds = [];
+
     studentIds.forEach(studentId => {
         if (!quiz.assignedTo.includes(studentId)) {
             quiz.assignedTo.push(studentId);
+            newAssignedStudentIds.push(studentId);
         }
     });
 
     await quiz.save();
+
+    // Send email notifications to newly assigned students
+    if (newAssignedStudentIds.length > 0) {
+        try {
+            const students = await User.find({ _id: { $in: newAssignedStudentIds } });
+
+            // Send emails in parallel
+            await Promise.all(students.map(student => {
+                if (student.email) {
+                    return sendAssignmentNotification(
+                        student.email,
+                        'Quiz',
+                        quiz.title || `Quiz on ${quiz.subject}`,
+                        req.user.name,
+                        `${process.env.FRONTEND_URL || 'http://localhost:3000'}/quizzes` // Assuming /quizzes or /assignments
+                    );
+                }
+            }));
+            console.log(`Sent notifications to ${students.length} students for quiz assignment.`);
+        } catch (error) {
+            console.error('Error sending assignment emails:', error);
+        }
+    }
 
     res.status(200).json({
         success: true,
