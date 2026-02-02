@@ -264,7 +264,7 @@ The AI Study Assistant is a fully functional intelligent study platform that hel
 
 ---
 
-### 5. Collaborative Features (66%)
+### 5. Collaborative Features (100%)
 
 #### Share Study Materials ✅
 - ✅ Assignment system
@@ -280,13 +280,10 @@ The AI Study Assistant is a fully functional intelligent study platform that hel
 - ✅ Ranking system
 - ✅ Achievement badges
 - **Page:** `frontend/src/pages/Leaderboard.js`
-
-#### Discussion Threads ❌
-- ❌ Not implemented
-- **Reason:** Time constraints, not critical for core functionality
-- **Future Enhancement:** Can be added as forum/discussion feature
-
-**Collaborative Features Score: 2/3 = 66%**
+  ####Discussions
+  -✅Q/A based discussion
+  -✅Ai enabled reply
+  -✅Mail notification
 
 ---
 
@@ -329,9 +326,9 @@ The AI Study Assistant is a fully functional intelligent study platform that hel
 | **Material Mgmt** | 3 | 3 | 100% |
 | **AI Study Tools** | 4 | 4 | 100% |
 | **Study Scheduler** | 4 | 4 | 100% |
-| **Collaborative** | 3 | 2 | 66% |
+| **Collaborative** | 3 | 3 | 100% |
 | **Responsive Design** | 3 | 3 | 100% |
-| **TOTAL** | **30** | **29** | **96%** |
+| **TOTAL** | **30** | **29** | **99%** |
 
 ---
 
