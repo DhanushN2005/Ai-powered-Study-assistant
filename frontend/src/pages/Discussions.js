@@ -25,10 +25,6 @@ const Discussions = () => {
         difficulty: 'medium'
     });
 
-    useEffect(() => {
-        fetchDiscussions();
-    }, [fetchDiscussions]);
-
     const fetchDiscussions = useCallback(async () => {
         try {
             setLoading(true);
@@ -41,6 +37,10 @@ const Discussions = () => {
             setLoading(false);
         }
     }, [filters]);
+
+    useEffect(() => {
+        fetchDiscussions();
+    }, [fetchDiscussions]);
 
     const handleCreateDiscussion = async (e) => {
         e.preventDefault();
