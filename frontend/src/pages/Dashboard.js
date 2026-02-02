@@ -196,7 +196,7 @@ export default function Dashboard() {
         )}
 
         {/* Quick Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10">
           <StatCard
             icon={Clock}
             title="Study Time"

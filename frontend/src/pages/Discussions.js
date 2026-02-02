@@ -121,15 +121,15 @@ const Discussions = () => {
     return (
         <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="mb-8">
-                <div className="flex justify-between items-center">
+            <div className="mb-8 px-4 sm:px-0">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Discussions</h1>
-                        <p className="text-gray-600 dark:text-gray-400 mt-2">Ask questions and help your peers</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Discussions</h1>
+                        <p className="text-gray-600 dark:text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">Ask questions and help your peers</p>
                     </div>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                     >
                         <Plus className="w-5 h-5" />
                         New Discussion
@@ -139,9 +139,9 @@ const Discussions = () => {
 
             {/* Search and Filters */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6 transition-colors">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
                     {/* Search */}
-                    <div className="md:col-span-2">
+                    <div className="flex-1">
                         <div className="relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <input
@@ -154,29 +154,31 @@ const Discussions = () => {
                         </div>
                     </div>
 
-                    {/* Status Filter */}
-                    <select
-                        value={filters.status}
-                        onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-                    >
-                        <option value="">All Status</option>
-                        <option value="open">Open</option>
-                        <option value="answered">Answered</option>
-                        <option value="closed">Closed</option>
-                    </select>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        {/* Status Filter */}
+                        <select
+                            value={filters.status}
+                            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                        >
+                            <option value="">All Status</option>
+                            <option value="open">Open</option>
+                            <option value="answered">Answered</option>
+                            <option value="closed">Closed</option>
+                        </select>
 
-                    {/* Sort */}
-                    <select
-                        value={filters.sort}
-                        onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
-                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-                    >
-                        <option value="-createdAt">Latest</option>
-                        <option value="createdAt">Oldest</option>
-                        <option value="-upvotes">Most Upvoted</option>
-                        <option value="-views">Most Viewed</option>
-                    </select>
+                        {/* Sort */}
+                        <select
+                            value={filters.sort}
+                            onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+                            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                        >
+                            <option value="-createdAt">Latest</option>
+                            <option value="createdAt">Oldest</option>
+                            <option value="-upvotes">Most Upvoted</option>
+                            <option value="-views">Most Viewed</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
