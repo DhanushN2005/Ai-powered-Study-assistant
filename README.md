@@ -87,3 +87,5 @@ See `TEST_REPORT.md` for detailed test execution results and manual testing scri
 
 ## 🏗️ Architecture
 See `ARCHITECTURE.md` for system diagrams and data flow visualization.
+
+[Note:This is deployed code, configured for hosting. To run in localhost run only frontend using ```npm start```]
