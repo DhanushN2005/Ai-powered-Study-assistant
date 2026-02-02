@@ -75,61 +75,60 @@ const Leaderboard = () => {
 
             {/* Top 3 Podium */}
             {topThree.length >= 3 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end relative py-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-end relative py-10 max-w-4xl mx-auto">
                     {/* Rank 2 */}
-                    <div className="bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center order-2 md:order-1 transform hover:-translate-y-2 transition-all duration-300 relative group">
-                        <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity" />
-                        <div className="relative">
-                            <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-full flex items-center justify-center text-3xl font-bold text-gray-500 shadow-inner">
+                    <div className="bg-white dark:bg-gray-800 rounded-t-2xl rounded-b-lg p-6 shadow-xl border-t-4 border-gray-300 dark:border-gray-500 flex flex-col items-center order-2 md:order-1 transform hover:scale-105 transition-all duration-300 relative group z-10">
+                        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-transparent dark:from-gray-700/50 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
+                        <div className="relative mb-2">
+                            <div className="w-20 h-20 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-3xl font-bold text-gray-600 dark:text-gray-300 shadow-inner ring-4 ring-gray-100 dark:ring-gray-600">
                                 {topThree[1].name.charAt(0)}
                             </div>
-                            <div className="absolute -bottom-3 -right-2 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold ring-4 ring-white dark:ring-gray-800 shadow-lg">
+                            <div className="absolute -bottom-3 -right-2 w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold ring-2 ring-white dark:ring-gray-800 shadow-lg">
                                 2
                             </div>
                         </div>
-                        <h3 className="mt-5 text-lg font-bold text-gray-900 dark:text-white truncate max-w-full text-center">{topThree[1].name}</h3>
-                        <p className="text-gray-500 dark:text-gray-400 text-xs uppercase font-semibold tracking-wider mt-1">Level {topThree[1].level}</p>
-                        <div className="mt-3 px-4 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full">
-                            <p className="text-indigo-600 dark:text-indigo-400 font-bold">{topThree[1].xp} XP</p>
+                        <h3 className="mt-4 text-lg font-bold text-gray-900 dark:text-white truncate w-full text-center">{topThree[1].name}</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs uppercase font-bold tracking-wide mt-1">Level {topThree[1].level}</p>
+                        <div className="mt-2 text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">
+                            {topThree[1].xp} XP
                         </div>
                     </div>
 
                     {/* Rank 1 */}
-                    <div className="bg-gradient-to-b from-yellow-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-2xl border-2 border-yellow-200 dark:border-yellow-900/50 flex flex-col items-center order-1 md:order-2 z-10 scale-110 transform hover:-translate-y-3 transition-all duration-300 relative overflow-hidden group">
-                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-50" />
-                        <div className="absolute inset-0 bg-yellow-400/5 opacity-0 group-hover:opacity-10 transition-opacity" />
+                    <div className="bg-white dark:bg-gray-800 rounded-t-2xl rounded-b-lg p-8 shadow-2xl border-t-4 border-yellow-400 flex flex-col items-center order-1 md:order-2 z-20 scale-110 md:scale-125 transform hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group mb-4 md:mb-0">
+                        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-yellow-50/50 to-transparent dark:from-yellow-900/10 pointer-events-none" />
 
-                        <div className="relative mb-2">
+                        <div className="relative mb-4">
                             <Crown className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-12 h-12 text-yellow-500 animate-bounce drop-shadow-md" strokeWidth={2.5} />
-                            <div className="w-24 h-24 bg-gradient-to-br from-yellow-100 to-yellow-300 dark:from-yellow-900/40 dark:to-yellow-700/40 rounded-full flex items-center justify-center text-4xl font-bold text-yellow-700 dark:text-yellow-400 shadow-inner ring-4 ring-yellow-50 dark:ring-gray-800">
+                            <div className="w-24 h-24 bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/60 dark:to-yellow-700/60 rounded-full flex items-center justify-center text-4xl font-bold text-yellow-700 dark:text-yellow-400 shadow-inner ring-4 ring-yellow-100 dark:ring-yellow-900/30">
                                 {topThree[0].name.charAt(0)}
                             </div>
-                            <div className="absolute -bottom-3 -right-2 w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold ring-4 ring-white dark:ring-gray-800 shadow-lg text-lg">
+                            <div className="absolute -bottom-3 -right-2 w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold ring-2 ring-white dark:ring-gray-800 shadow-lg text-lg">
                                 1
                             </div>
                         </div>
-                        <h3 className="mt-6 text-xl font-black text-gray-900 dark:text-white truncate max-w-full text-center tracking-tight">{topThree[0].name}</h3>
-                        <p className="text-yellow-600 dark:text-yellow-500 text-xs uppercase font-bold tracking-wider mt-1">Level {topThree[0].level}</p>
-                        <div className="mt-4 px-6 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-full border border-yellow-200 dark:border-yellow-800">
-                            <p className="text-yellow-800 dark:text-yellow-400 font-black text-xl">{topThree[0].xp} XP</p>
+                        <h3 className="mt-2 text-xl font-black text-gray-900 dark:text-white truncate w-full text-center">{topThree[0].name}</h3>
+                        <p className="text-yellow-600 dark:text-yellow-500 text-xs uppercase font-bold tracking-wide mt-1">Level {topThree[0].level}</p>
+                        <div className="mt-3 text-yellow-700 dark:text-yellow-400 font-black text-xl bg-yellow-50 dark:bg-yellow-900/20 px-4 py-1.5 rounded-full border border-yellow-100 dark:border-yellow-900/30">
+                            {topThree[0].xp} XP
                         </div>
                     </div>
 
                     {/* Rank 3 */}
-                    <div className="bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center order-3 transform hover:-translate-y-2 transition-all duration-300 relative group">
-                        <div className="absolute inset-0 bg-orange-100 dark:bg-orange-900/10 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity" />
-                        <div className="relative">
-                            <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900/40 dark:to-orange-700/40 rounded-full flex items-center justify-center text-3xl font-bold text-orange-600 shadow-inner">
+                    <div className="bg-white dark:bg-gray-800 rounded-t-2xl rounded-b-lg p-6 shadow-xl border-t-4 border-orange-400 flex flex-col items-center order-3 transform hover:scale-105 transition-all duration-300 relative group z-10">
+                        <div className="absolute inset-0 bg-gradient-to-b from-orange-50 to-transparent dark:from-orange-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
+                        <div className="relative mb-2">
+                            <div className="w-20 h-20 bg-orange-100 dark:bg-orange-900/40 rounded-full flex items-center justify-center text-3xl font-bold text-orange-600 dark:text-orange-400 shadow-inner ring-4 ring-orange-50 dark:ring-orange-900/20">
                                 {topThree[2].name.charAt(0)}
                             </div>
-                            <div className="absolute -bottom-3 -right-2 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold ring-4 ring-white dark:ring-gray-800 shadow-lg">
+                            <div className="absolute -bottom-3 -right-2 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold ring-2 ring-white dark:ring-gray-800 shadow-lg">
                                 3
                             </div>
                         </div>
-                        <h3 className="mt-5 text-lg font-bold text-gray-900 dark:text-white truncate max-w-full text-center">{topThree[2].name}</h3>
-                        <p className="text-gray-500 dark:text-gray-400 text-xs uppercase font-semibold tracking-wider mt-1">Level {topThree[2].level}</p>
-                        <div className="mt-3 px-4 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full">
-                            <p className="text-indigo-600 dark:text-indigo-400 font-bold">{topThree[2].xp} XP</p>
+                        <h3 className="mt-4 text-lg font-bold text-gray-900 dark:text-white truncate w-full text-center">{topThree[2].name}</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs uppercase font-bold tracking-wide mt-1">Level {topThree[2].level}</p>
+                        <div className="mt-2 text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">
+                            {topThree[2].xp} XP
                         </div>
                     </div>
                 </div>

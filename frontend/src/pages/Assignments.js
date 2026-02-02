@@ -152,8 +152,8 @@ const Assignments = () => {
                     {assignedMaterials.length > 0 && (
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                                <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                                    <FileText className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                                <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                                    <FileText className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                                 </div>
                                 Assigned Study Materials
                                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
@@ -226,8 +226,8 @@ const Assignments = () => {
                     {assignedQuizzes.length > 0 && (
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                                <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                                    <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                                <div className="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg">
+                                    <Brain className="w-6 h-6 text-rose-600 dark:text-rose-400" />
                                 </div>
                                 Assigned Quizzes
                                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
@@ -243,15 +243,12 @@ const Assignments = () => {
                                     return (
                                         <div
                                             key={quiz._id}
-                                            className="glass-card rounded-xl p-6 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+                                            className="glass-card rounded-xl p-6 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 relative overflow-hidden group border-t-4 border-rose-500"
                                             style={{ animationDelay: `${idx * 100}ms` }}
                                         >
-                                            {/* Status Bar */}
-                                            <div className={`absolute top-0 left-0 w-1 h-full ${overdue ? 'bg-red-500' : isDueSoon ? 'bg-amber-500' : 'bg-purple-500'
-                                                }`} />
 
-                                            <div className="flex justify-between items-start mb-4 pl-2">
-                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-100 dark:border-purple-800">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300 border border-rose-100 dark:border-rose-800">
                                                     <Star className="w-3 h-3 fill-current" />
                                                     Required
                                                 </span>
@@ -267,8 +264,8 @@ const Assignments = () => {
                                                 </span>
                                             </div>
 
-                                            <div className="pl-2">
-                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                            <div>
+                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
                                                     {quiz.subject}
                                                 </h3>
 
@@ -289,10 +286,10 @@ const Assignments = () => {
                                                         ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300'
                                                         : isDueSoon
                                                             ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300'
-                                                            : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300'
+                                                            : 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300'
                                                         }`}>
                                                         <div className="flex items-center gap-3">
-                                                            <div className={`p-2 rounded-lg ${overdue ? 'bg-red-100 dark:bg-red-800/50' : isDueSoon ? 'bg-amber-100 dark:bg-amber-800/50' : 'bg-blue-100 dark:bg-blue-800/50'
+                                                            <div className={`p-2 rounded-lg ${overdue ? 'bg-red-100 dark:bg-red-800/50' : isDueSoon ? 'bg-amber-100 dark:bg-amber-800/50' : 'bg-sky-100 dark:bg-sky-800/50'
                                                                 }`}>
                                                                 {overdue ? <AlertCircle className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
                                                             </div>
@@ -319,7 +316,7 @@ const Assignments = () => {
                                                     onClick={() => handleTakeQuiz(quiz._id)}
                                                     className={`w-full py-2.5 rounded-lg font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 group/btn ${overdue
                                                         ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-red-200 dark:shadow-none'
-                                                        : 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-purple-200 dark:shadow-none'
+                                                        : 'bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 shadow-rose-200 dark:shadow-none'
                                                         }`}
                                                 >
                                                     <Brain className="w-5 h-5 group-hover/btn:animate-wiggle" />

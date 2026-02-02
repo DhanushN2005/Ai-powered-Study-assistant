@@ -385,17 +385,17 @@ export default function Dashboard() {
 function StatCard({ icon: Icon, title, value, subtitle, color, delay, trend, isFire }) {
 
   const bgColors = {
-    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400',
-    green: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400',
-    purple: 'bg-violet-50 text-violet-600 dark:bg-violet-900/20 dark:text-violet-400',
-    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400',
+    blue: 'bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-300',
+    green: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300',
+    purple: 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300',
+    orange: 'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-300',
   };
 
   const borderColors = {
-    blue: 'group-hover:border-blue-200 dark:group-hover:border-blue-800',
-    green: 'group-hover:border-emerald-200 dark:group-hover:border-emerald-800',
-    purple: 'group-hover:border-violet-200 dark:group-hover:border-violet-800',
-    orange: 'group-hover:border-orange-200 dark:group-hover:border-orange-800',
+    blue: 'group-hover:border-sky-200 dark:group-hover:border-sky-700',
+    green: 'group-hover:border-emerald-200 dark:group-hover:border-emerald-700',
+    purple: 'group-hover:border-rose-200 dark:group-hover:border-rose-700',
+    orange: 'group-hover:border-amber-200 dark:group-hover:border-amber-700',
   };
 
   return (

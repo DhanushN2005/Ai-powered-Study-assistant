@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Upload, FileText, Loader, X, BookOpen, Brain, Calendar, Eye, Star } from 'lucide-react';
+import { Upload, FileText, Loader, X, BookOpen, Brain, Eye, Star, Layers } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { materialsAPI, aiAPI, authAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
@@ -158,75 +158,79 @@ const Materials = () => {
     };
 
     const renderMaterialCard = (material, isAssigned = false) => (
-        <div key={material._id} className={`bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-all p-6 ${isAssigned ? 'border-2 border-indigo-500 dark:border-indigo-400' : ''}`}>
+        <div key={material._id} className={`bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 p-6 ${isAssigned ? 'border-2 border-emerald-500 dark:border-emerald-400' : 'border border-gray-100 dark:border-gray-700'}`}>
             {isAssigned && (
                 <div className="flex items-center gap-2 mb-3">
-                    <Star className="w-5 h-5 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
-                    <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">Assigned by Instructor</span>
+                    <Star className="w-5 h-5 text-emerald-500 dark:text-emerald-400 fill-emerald-500 dark:fill-emerald-400" />
+                    <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">Assigned by Instructor</span>
                 </div>
             )}
-            <div className="flex items-start gap-3 mb-4">
-                <FileText className="w-8 h-8 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+            <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                    <FileText className="w-8 h-8 flex-shrink-0" />
+                </div>
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                         {material.title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-white">{material.subject}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-300">{material.topic}</p>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300">{material.subject}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{material.topic}</p>
                 </div>
             </div>
 
-            <div className="mb-4 flex gap-2 flex-wrap">
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${material.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
-                    material.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800'
+            <div className="mb-6 flex gap-2 flex-wrap">
+                <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${material.difficulty === 'beginner' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' :
+                    material.difficulty === 'intermediate' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300' :
+                        'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
                     }`}>
                     {material.difficulty}
                 </span>
                 {material.summary && (
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-300">
                         Has Summary
                     </span>
                 )}
                 {material.flashcards && material.flashcards.length > 0 && (
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-300">
                         {material.flashcards.length} Cards
                     </span>
                 )}
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
                 <button
                     onClick={() => {
                         setSelectedMaterial(material);
                         setShowQuizModal(true);
                     }}
-                    className="w-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2 rounded-lg font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800 px-4 py-2.5 rounded-lg font-bold hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-colors flex items-center justify-center gap-2"
                 >
                     <Brain className="w-4 h-4" />
                     Generate Quiz
                 </button>
 
-                <button
-                    onClick={() => material.summary ? (setSelectedMaterial(material), setShowSummaryModal(true)) : handleSummarize(material._id)}
-                    className="w-full bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 px-4 py-2 rounded-lg font-medium hover:bg-purple-100 dark:hover:bg-purple-900/60 transition-colors flex items-center justify-center gap-2"
-                >
-                    {material.summary ? <Eye className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
-                    {material.summary ? 'View Summary' : 'Generate Summary'}
-                </button>
+                <div className="grid grid-cols-2 gap-3">
+                    <button
+                        onClick={() => material.summary ? (setSelectedMaterial(material), setShowSummaryModal(true)) : handleSummarize(material._id)}
+                        className="w-full bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300 border border-teal-100 dark:border-teal-800 px-3 py-2.5 rounded-lg font-bold hover:bg-teal-100 dark:hover:bg-teal-800/40 transition-colors flex items-center justify-center gap-2"
+                    >
+                        {material.summary ? <Eye className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
+                        {material.summary ? 'View' : 'Summarize'}
+                    </button>
 
-                <button
-                    onClick={() => material.flashcards?.length > 0 ? (setSelectedMaterial(material), setShowFlashcardsModal(true)) : handleGenerateFlashcards(material._id)}
-                    className="w-full bg-green-50 dark:bg-green-900/40 text-green-600 dark:text-green-300 px-4 py-2 rounded-lg font-medium hover:bg-green-100 dark:hover:bg-green-900/60 transition-colors flex items-center justify-center gap-2"
-                >
-                    {material.flashcards?.length > 0 ? <Eye className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
-                    {material.flashcards?.length > 0 ? 'View Flashcards' : 'Generate Flashcards'}
-                </button>
+                    <button
+                        onClick={() => material.flashcards?.length > 0 ? (setSelectedMaterial(material), setShowFlashcardsModal(true)) : handleGenerateFlashcards(material._id)}
+                        className="w-full bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 border border-amber-100 dark:border-amber-800 px-3 py-2.5 rounded-lg font-bold hover:bg-amber-100 dark:hover:bg-amber-800/40 transition-colors flex items-center justify-center gap-2"
+                    >
+                        {material.flashcards?.length > 0 ? <Eye className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
+                        {material.flashcards?.length > 0 ? 'Cards' : 'Flashcards'}
+                    </button>
+                </div>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-xs text-gray-500 dark:text-gray-300">
-                    Uploaded {new Date(material.createdAt).toLocaleDateString()}
+            <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                <p className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                    {new Date(material.createdAt).toLocaleDateString()}
                 </p>
             </div>
         </div>

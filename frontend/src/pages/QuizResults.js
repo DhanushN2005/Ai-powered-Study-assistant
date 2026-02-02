@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Award, CheckCircle, XCircle, Loader, Home, Brain, PartyPopper, BookOpen } from 'lucide-react';
+import { Award, CheckCircle, XCircle, Loader, Home, Brain } from 'lucide-react';
 import { quizAPI } from '../utils/api';
 
 const QuizResults = () => {
@@ -59,10 +59,9 @@ const QuizResults = () => {
                     <p className="text-xl text-gray-700 dark:text-white mb-4">
                         {score.correct} out of {score.total} correct
                     </p>
-                    <div className={`inline-flex items-center gap-2 px-6 py-2 rounded-full text-lg font-semibold ${passed ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+                    <div className={`inline-block px-6 py-2 rounded-full text-lg font-semibold ${passed ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
                         }`}>
-                        {passed ? <PartyPopper className="w-6 h-6" /> : <BookOpen className="w-6 h-6" />}
-                        {passed ? 'Passed!' : 'Keep Practicing'}
+                        {passed ? '🎉 Passed!' : '📚 Keep Practicing'}
                     </div>
                 </div>
             </div>
