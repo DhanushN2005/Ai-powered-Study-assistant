@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { BookOpen, LayoutDashboard, FileText, Calendar, BarChart3, User, LogOut, Users, Upload, Brain, Sun, Moon, Trophy, Menu, X, MessageSquare, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookOpen, LayoutDashboard, FileText, Calendar, BarChart3, User, LogOut, Users, Upload, Brain, Sun, Moon, Trophy, Menu, X, MessageSquare, ChevronLeft, ChevronRight, GraduationCap, School } from 'lucide-react';
 import { authAPI } from '../utils/api';
 
 const Layout = () => {
@@ -99,10 +99,11 @@ const Layout = () => {
                         </div>
                     ) : (
                         <div className="animate-fade-in">
-                            <p className="text-xs text-indigo-600 dark:text-indigo-300 font-semibold uppercase">
-                                {user.role === 'instructor' ? '👨‍🏫 Instructor' : '🎓 Student'}
+                            <p className="text-xs text-indigo-600 dark:text-indigo-300 font-semibold uppercase flex items-center gap-1">
+                                {user.role === 'instructor' ? <School className="w-3 h-3" /> : <GraduationCap className="w-3 h-3" />}
+                                {user.role === 'instructor' ? 'Instructor' : 'Student'}
                             </p>
-                            <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1 truncate">
+                            <p className="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">
                                 {user.name}
                             </p>
                         </div>
@@ -115,13 +116,16 @@ const Layout = () => {
                     <Link
                         key={item.path}
                         to={item.path}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all relative group ${isActive(item.path)
-                            ? 'bg-indigo-600 text-white shadow-md'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50'
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all relative group overflow-hidden ${isActive(item.path)
+                            ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/30'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700/50'
                             }`}
                         title={isCollapsed ? item.name : ''}
                     >
-                        <item.icon className={`w-5 h-5 min-w-[20px]`} />
+                        {isActive(item.path) && (
+                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
+                        <item.icon className={`w-5 h-5 min-w-[20px] transition-transform group-hover:scale-110 duration-200`} />
                         {!isCollapsed && <span className="font-medium whitespace-nowrap animate-fade-in">{item.name}</span>}
 
                         {/* Tooltip for collapsed state */}

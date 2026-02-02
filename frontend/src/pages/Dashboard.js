@@ -117,19 +117,22 @@ export default function Dashboard() {
         {/* Assigned Tasks Notification */}
         {hasAssignments && (
           <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-1 shadow-lg shadow-indigo-200 dark:shadow-none">
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                  <Bell className="w-32 h-32 transform rotate-12" />
+            <div className="relative overflow-hidden rounded-2xl p-[1px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-xl shadow-indigo-500/20">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 relative overflow-hidden backdrop-blur-xl bg-opacity-95 dark:bg-opacity-95">
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 p-4 opacity-5 transform rotate-12 scale-150 pointer-events-none">
+                  <Bell className="w-64 h-64 text-indigo-900 dark:text-white" />
                 </div>
+                <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
                 <div className="flex items-start gap-6 relative z-10">
                   <div className="flex-shrink-0">
-                    <div className="relative">
-                      <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                        <Bell className="w-6 h-6 animate-swing" />
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-indigo-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full" />
+                      <div className="relative w-14 h-14 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-indigo-900/50 dark:to-indigo-800/50 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-700 shadow-sm">
+                        <Bell className="w-7 h-7 animate-swing" />
                       </div>
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900">
+                      <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900 shadow-md transform group-hover:scale-110 transition-transform">
                         <span className="text-xs text-white font-bold">
                           {(assignedMaterials?.length || 0) + (assignedQuizzes?.length || 0)}
                         </span>
@@ -137,10 +140,10 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                      New Assignments
-                      <span className="px-2 py-0.5 text-xs font-semibold bg-indigo-100 text-indigo-700 rounded-full dark:bg-indigo-900/50 dark:text-indigo-300">
-                        Action Required
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                      Action Required
+                      <span className="px-3 py-1 text-xs font-bold uppercase tracking-wide bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full shadow-sm">
+                        New Assignments
                       </span>
                     </h3>
 
@@ -381,34 +384,46 @@ export default function Dashboard() {
 // Styled Components
 function StatCard({ icon: Icon, title, value, subtitle, color, delay, trend, isFire }) {
 
-
   const bgColors = {
-    blue: 'bg-blue-50 text-blue-600',
-    green: 'bg-emerald-50 text-emerald-600',
-    purple: 'bg-violet-50 text-violet-600',
-    orange: 'bg-orange-50 text-orange-600',
+    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400',
+    green: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400',
+    purple: 'bg-violet-50 text-violet-600 dark:bg-violet-900/20 dark:text-violet-400',
+    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400',
+  };
+
+  const borderColors = {
+    blue: 'group-hover:border-blue-200 dark:group-hover:border-blue-800',
+    green: 'group-hover:border-emerald-200 dark:group-hover:border-emerald-800',
+    purple: 'group-hover:border-violet-200 dark:group-hover:border-violet-800',
+    orange: 'group-hover:border-orange-200 dark:group-hover:border-orange-800',
   };
 
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition-all duration-300 animate-slide-up"
+      className={`group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-slide-up relative overflow-hidden ${borderColors[color]}`}
       style={{ animationDelay: delay }}
     >
-      <div className="flex justify-between items-start">
-        <div className={`p-3 rounded-xl ${bgColors[color]} dark:bg-opacity-10`}>
-          <Icon className={`w-6 h-6 ${isFire ? 'animate-bounce' : ''}`} />
+      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+        <Icon className="w-24 h-24" />
+      </div>
+
+      <div className="flex justify-between items-start relative z-10">
+        <div className={`p-3 rounded-xl ${bgColors[color]} transition-colors duration-300`}>
+          <Icon className={`w-6 h-6 ${isFire ? 'animate-bounce' : 'group-hover:scale-110 transition-transform duration-300'}`} />
         </div>
         {trend && (
-          <span className="flex items-center text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+          <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-100 dark:border-emerald-800">
             <TrendingUp className="w-3 h-3 mr-1" />
             {trend}
           </span>
         )}
       </div>
-      <div className="mt-4">
-        <h3 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{value}</h3>
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">{title}</p>
-        <p className="text-xs text-gray-400 mt-2">{subtitle}</p>
+      <div className="mt-4 relative z-10">
+        <h3 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-gray-600 dark:group-hover:from-white dark:group-hover:to-gray-300 transition-all duration-300">
+          {value}
+        </h3>
+        <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mt-1">{title}</p>
+        <p className="text-xs text-gray-400 mt-2 font-medium">{subtitle}</p>
       </div>
     </div>
   );
