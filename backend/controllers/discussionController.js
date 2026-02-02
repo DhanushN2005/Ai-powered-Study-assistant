@@ -221,13 +221,16 @@ exports.addReply = asyncHandler(async (req, res) => {
 
                 // 2. Send Email Notification
                 if (discussionOwner.email) {
+                    console.log(`Sending email to ${discussionOwner.email}`);
                     // Run distinct from main thread to not block response
                     sendReplyNotification(
                         discussionOwner.email,
                         discussion.title,
                         req.user.name,
                         discussion._id
-                    ).catch(err => console.error('Email sending failed in controller:', err));
+                    )
+                        .then(() => console.log('✅ Email notification sent'))
+                        .catch(err => console.error('❌ Email sending failed:', err));
                 }
             }
         }
